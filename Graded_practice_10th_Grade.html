@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graded practice - 10th Grade</title>
+<style>
+:root{
+  --bg:#f4f6fb;--card:#ffffff;--text:#1b2230;--muted:#566176;--border:#d3dae8;
+  --accent:#2457c5;--accent-text:#ffffff;--sel:#e8efff;--field:#ffffff;
+  --warn-bg:#fff4d6;--warn-border:#e0b54a;--warn-text:#4d3a00;--bad:#d33232;
+}
+:root[data-theme="dark"]{
+  --bg:#11151e;--card:#1b2130;--text:#e8ecf5;--muted:#a6b0c5;--border:#35425c;
+  --accent:#7aa2ff;--accent-text:#0d1220;--sel:#25314d;--field:#121826;
+  --warn-bg:#3a2f10;--warn-border:#8a6d1f;--warn-text:#ffe9a8;--bad:#ff7b7b;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.5}
+button{font:inherit;cursor:pointer}
+.topbar{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--border)}
+.topbar .in{max-width:880px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.topbar h1{font-size:1.1rem;margin:0;flex:1 1 auto}
+.meta{color:var(--muted);font-size:.88rem}
+.btn{background:var(--accent);color:var(--accent-text);border:0;border-radius:8px;padding:.6em 1.2em;font-weight:600}
+.btn.secondary{background:transparent;color:var(--text);border:1px solid var(--border);padding:.4em .9em;font-weight:500}
+.btn:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+main{max-width:880px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:0 0 16px}
+.intro{font-weight:600;margin:4px 0 14px}
+.notice{background:var(--warn-bg);border-color:var(--warn-border);color:var(--warn-text);font-size:.95rem}
+.notice strong{display:block;margin-bottom:4px}
+h2{font-size:1.1rem;margin:0 0 6px}
+.student{display:grid;grid-template-columns:1.2fr 1.6fr .8fr;gap:12px}
+@media (max-width:640px){.student{grid-template-columns:1fr}}
+.f span{display:block;font-weight:600;font-size:.9rem;margin-bottom:4px}
+input[type=text],select{width:100%;font:inherit;padding:.5em .6em;border:1px solid var(--border);border-radius:8px;background:var(--field);color:var(--text);-webkit-user-select:text;user-select:text}
+.invalid{border-color:var(--bad)!important;box-shadow:0 0 0 2px var(--bad)}
+.err{color:var(--bad);font-weight:600;margin:10px 0 0;min-height:1.2em}
+.instr{color:var(--muted);margin:2px 0 8px}
+.bank{font-weight:600;margin:6px 0 10px}
+.q{display:flex;gap:10px;padding:12px 0;border-top:1px solid var(--border)}
+.qnum{font-weight:700;min-width:2.3em;color:var(--accent)}
+.qbody{flex:1 1 auto;min-width:0}
+.qtext,.qline,.bank,h2,.instr,.intro{-webkit-user-select:none;user-select:none}
+.mark{font-weight:700;color:var(--accent)}
+.opts{margin-top:6px}
+.opts.inline{display:flex;gap:10px;flex-wrap:wrap}
+.opt{display:flex;gap:8px;align-items:flex-start;padding:.3em .6em;border-radius:8px;cursor:pointer;-webkit-user-select:none;user-select:none}
+.opt:hover{background:var(--sel)}
+.opt input{margin-top:.4em}
+.opt .l{font-weight:700;min-width:1.4em}
+.qline{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qline select{width:auto;min-width:11em}
+input.short{width:14em;max-width:100%;margin-top:6px;display:block}
+.status{margin:10px 0 0;font-weight:600}
+.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#222;color:#fff;padding:.6em 1em;border-radius:8px;font-size:.92rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:60}
+.toast.show{opacity:.95}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal-bg.show{display:flex}
+.modal{background:var(--card);color:var(--text);border:2px solid var(--warn-border);border-radius:12px;max-width:520px;padding:20px}
+.modal h2{margin-top:0}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="in">
+    <h1>Graded practice - 10th Grade</h1>
+    <span class="meta">Version 1.0</span>
+    <span class="meta" id="progress"></span>
+    <button type="button" class="btn secondary" id="themeBtn"></button>
+  </div>
+</header>
+
+<main>
+  <p class="intro" id="intro"></p>
+
+  <div class="card notice" role="note">
+    <strong>Please read before you start</strong>
+    Copy, cut, paste, and right-click are turned off, and this page records when you leave this tab and when you come back. These are deterrents only, not foolproof security. Tab monitoring cannot identify which website or application you opened, and it cannot prevent screenshots or the use of another device. Your teacher will see the times you left and returned.
+  </div>
+
+  <form id="infoForm" class="card" autocomplete="off" novalidate>
+    <h2>Student information (all fields required)</h2>
+    <div class="student">
+      <label class="f"><span>First name</span><input type="text" id="firstName" autocomplete="off" spellcheck="false"></label>
+      <label class="f"><span>Surnames (last names)</span><input type="text" id="surnames" autocomplete="off" spellcheck="false"></label>
+      <label class="f"><span>Group</span><input type="text" id="group" autocomplete="off" spellcheck="false"></label>
+    </div>
+    <p class="err" id="infoErr" role="alert"></p>
+  </form>
+
+  <div id="quiz"></div>
+
+  <div class="card">
+    <button type="button" class="btn" id="downloadBtn">Download my answers (JSON file)</button>
+    <p class="status" id="status" role="status"></p>
+    <p class="meta">After downloading, upload the JSON file to Google Classroom.</p>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<div class="modal-bg" id="warnBg" role="alertdialog" aria-modal="true" aria-labelledby="warnTitle">
+  <div class="modal">
+    <h2 id="warnTitle">You left the quiz tab</h2>
+    <p id="warnBody"></p>
+    <p>This has been recorded and will be included in your submission. Tab monitoring cannot identify which website or application you opened, and it cannot prevent screenshots or the use of another device.</p>
+    <button type="button" class="btn" id="warnOk">I understand, return to the quiz</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="focusBg" role="alertdialog" aria-modal="true" aria-labelledby="focusMsg">
+  <div class="modal">
+    <p id="focusMsg">Your actions have been recorded.</p>
+    <button type="button" class="btn" id="focusOk">I understand, return to quiz</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var EXAM = {
+ "title": "Graded practice - 10th Grade",
+ "version": "1.0",
+ "intro": "Each question is worth 1 point. No answer needs more than one word or one letter.",
+ "sections": [
+  {
+   "title": "Part 1: Verbs (Questions 1-8)",
+   "preamble": [
+    "Circle the letter of the best answer."
+   ],
+   "bankLine": null,
+   "bank": null,
+   "questions": [
+    {
+     "id": "q1",
+     "num": 1,
+     "type": "mc",
+     "text": "In “The soup tastes salty,” the verb tastes is:",
+     "options": [
+      {
+       "letter": "A",
+       "text": "transitive"
+      },
+      {
+       "letter": "B",
+       "text": "intransitive"
+      },
+      {
+       "letter": "C",
+       "text": "linking"
+      },
+      {
+       "letter": "D",
+       "text": "helping"
+      }
+     ]
+    },
+    {
+     "id": "q2",
+     "num": 2,
+     "type": "mc",
+     "text": "In “The children were playing outside,” the word were is a:",
+     "options": [
+      {
+       "letter": "A",
+       "text": "linking verb"
+      },
+      {
+       "letter": "B",
+       "text": "helping verb"
+      },
+      {
+       "letter": "C",
+       "text": "transitive verb"
+      },
+      {
+       "letter": "D",
+       "text": "intransitive verb"
+      }
+     ]
+    },
+    {
+     "id": "q3",
+     "num": 3,
+     "type": "mc",
+     "text": "Which sentence contains a linking verb?",
+     "options": [
+      {
+       "letter": "A",
+       "text": "The farmer grew corn."
+      },
+      {
+       "letter": "B",
+       "text": "The birds flew south."
+      },
+      {
+       "letter": "C",
+       "text": "She will bake bread."
+      },
+      {
+       "letter": "D",
+       "text": "The weather grew cold."
+      }
+     ]
+    },
+    {
+     "id": "q4",
+     "num": 4,
+     "type": "mc",
+     "text": "In “The door opened slowly,” the verb opened is:",
+     "options": [
+      {
+       "letter": "A",
+       "text": "intransitive"
+      },
+      {
+       "letter": "B",
+       "text": "transitive"
+      },
+      {
+       "letter": "C",
+       "text": "linking"
+      },
+      {
+       "letter": "D",
+       "text": "helping"
+      }
+     ]
+    },
+    {
+     "id": "q5",
+     "num": 5,
+     "type": "mc",
+     "text": "In “Our team won the final game,” the verb won is:",
+     "options": [
+      {
+       "letter": "A",
+       "text": "linking"
+      },
+      {
+       "letter": "B",
+       "text": "helping"
+      },
+      {
+       "letter": "C",
+       "text": "transitive"
+      },
+      {
+       "letter": "D",
+       "text": "intransitive"
+      }
+     ]
+    },
+    {
+     "id": "q6",
+     "num": 6,
+     "type": "mc",
+     "text": "Which sentence uses has as a helping verb?",
+     "options": [
+      {
+       "letter": "A",
+       "text": "She has two brothers."
+      },
+      {
+       "letter": "B",
+       "text": "He has finished his homework."
+      },
+      {
+       "letter": "C",
+       "text": "The dog has a new collar."
+      },
+      {
+       "letter": "D",
+       "text": "My uncle has a red truck."
+      }
+     ]
+    },
+    {
+     "id": "q7",
+     "num": 7,
+     "type": "mc",
+     "text": "Which sentence contains a helping verb followed by an intransitive verb?",
+     "options": [
+      {
+       "letter": "A",
+       "text": "Lisa will sing tonight."
+      },
+      {
+       "letter": "B",
+       "text": "Tom is a good student."
+      },
+      {
+       "letter": "C",
+       "text": "We have a test tomorrow."
+      },
+      {
+       "letter": "D",
+       "text": "The kids are happy."
+      }
+     ]
+    },
+    {
+     "id": "q8",
+     "num": 8,
+     "type": "mc",
+     "text": "Which sentence contains a transitive verb?",
+     "options": [
+      {
+       "letter": "A",
+       "text": "The boys ran fast."
+      },
+      {
+       "letter": "B",
+       "text": "My phone rang."
+      },
+      {
+       "letter": "C",
+       "text": "The river is wide."
+      },
+      {
+       "letter": "D",
+       "text": "Our coach ran the practice."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Part 2: The Four Types of Sentences (Questions 9-13)",
+   "preamble": [
+    "Write the letter of the correct sentence type in the blank. Letters can be used more than once."
+   ],
+   "bankLine": "A. Declarative B. Interrogative C. Imperative D. Exclamatory",
+   "bank": [
+    {
+     "letter": "A",
+     "text": "Declarative"
+    },
+    {
+     "letter": "B",
+     "text": "Interrogative"
+    },
+    {
+     "letter": "C",
+     "text": "Imperative"
+    },
+    {
+     "letter": "D",
+     "text": "Exclamatory"
+    }
+   ],
+   "questions": [
+    {
+     "id": "q9",
+     "num": 9,
+     "type": "matching",
+     "text": "____ Be careful with that knife.",
+     "options": []
+    },
+    {
+     "id": "q10",
+     "num": 10,
+     "type": "matching",
+     "text": "____ How brave you were!",
+     "options": []
+    },
+    {
+     "id": "q11",
+     "num": 11,
+     "type": "matching",
+     "text": "____ I wonder where my phone is.",
+     "options": []
+    },
+    {
+     "id": "q12",
+     "num": 12,
+     "type": "matching",
+     "text": "____ Is your brother coming to the party?",
+     "options": []
+    },
+    {
+     "id": "q13",
+     "num": 13,
+     "type": "matching",
+     "text": "____ Our neighbors adopted a puppy.",
+     "options": []
+    }
+   ]
+  },
+  {
+   "title": "Part 3: Subjects and Predicates (Questions 14-18)",
+   "preamble": [
+    "Write one word in the blank."
+   ],
+   "bankLine": null,
+   "bank": null,
+   "questions": [
+    {
+     "id": "q14",
+     "num": 14,
+     "type": "short",
+     "text": "Write the simple subject: The gray cat on the roof watched the birds. ________",
+     "options": []
+    },
+    {
+     "id": "q15",
+     "num": 15,
+     "type": "short",
+     "text": "Write the simple subject: Every Saturday, my uncle washes his truck. ________",
+     "options": []
+    },
+    {
+     "id": "q16",
+     "num": 16,
+     "type": "short",
+     "text": "Write the simple predicate (the verb): The little girl in the yellow dress sang beautifully. ________",
+     "options": []
+    },
+    {
+     "id": "q17",
+     "num": 17,
+     "type": "short",
+     "text": "Write the simple predicate (the verb): Heavy rain flooded the street last night. ________",
+     "options": []
+    },
+    {
+     "id": "q18",
+     "num": 18,
+     "type": "short",
+     "text": "Write the simple subject: Behind the house stand three tall palm trees. ________",
+     "options": []
+    }
+   ]
+  },
+  {
+   "title": "Part 4: Prepositions of Time and Place (Questions 19-23)",
+   "preamble": [
+    "Choose the word that correctly completes the sentence."
+   ],
+   "bankLine": null,
+   "bank": null,
+   "questions": [
+    {
+     "id": "q19",
+     "num": 19,
+     "type": "mc",
+     "text": "Our class begins ____ 7:15 a.m.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "on"
+      },
+      {
+       "letter": "B",
+       "text": "at"
+      },
+      {
+       "letter": "C",
+       "text": "in"
+      },
+      {
+       "letter": "D",
+       "text": "by"
+      }
+     ]
+    },
+    {
+     "id": "q20",
+     "num": 20,
+     "type": "mc",
+     "text": "The festival takes place ____ July.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "in"
+      },
+      {
+       "letter": "B",
+       "text": "at"
+      },
+      {
+       "letter": "C",
+       "text": "on"
+      },
+      {
+       "letter": "D",
+       "text": "of"
+      }
+     ]
+    },
+    {
+     "id": "q21",
+     "num": 21,
+     "type": "mc",
+     "text": "I will see you ____ Thursday morning.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "at"
+      },
+      {
+       "letter": "B",
+       "text": "in"
+      },
+      {
+       "letter": "C",
+       "text": "on"
+      },
+      {
+       "letter": "D",
+       "text": "to"
+      }
+     ]
+    },
+    {
+     "id": "q22",
+     "num": 22,
+     "type": "mc",
+     "text": "Wait for me ____ the entrance of the mall.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "in"
+      },
+      {
+       "letter": "B",
+       "text": "on"
+      },
+      {
+       "letter": "C",
+       "text": "of"
+      },
+      {
+       "letter": "D",
+       "text": "at"
+      }
+     ]
+    },
+    {
+     "id": "q23",
+     "num": 23,
+     "type": "mc",
+     "text": "My grandparents live ____ a village in the mountains.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "at"
+      },
+      {
+       "letter": "B",
+       "text": "in"
+      },
+      {
+       "letter": "C",
+       "text": "on"
+      },
+      {
+       "letter": "D",
+       "text": "by"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Part 5: Quantifiers (Questions 24-30)",
+   "preamble": [
+    "Choose the word or phrase that correctly completes the sentence."
+   ],
+   "bankLine": null,
+   "bank": null,
+   "questions": [
+    {
+     "id": "q24",
+     "num": 24,
+     "type": "mc",
+     "text": "How ____ homework do we have tonight?",
+     "options": [
+      {
+       "letter": "A",
+       "text": "many"
+      },
+      {
+       "letter": "B",
+       "text": "few"
+      },
+      {
+       "letter": "C",
+       "text": "a few"
+      },
+      {
+       "letter": "D",
+       "text": "much"
+      }
+     ]
+    },
+    {
+     "id": "q25",
+     "num": 25,
+     "type": "mc",
+     "text": "Only ____ students passed the difficult exam, so the teacher was worried.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "few"
+      },
+      {
+       "letter": "B",
+       "text": "little"
+      },
+      {
+       "letter": "C",
+       "text": "much"
+      },
+      {
+       "letter": "D",
+       "text": "a little"
+      }
+     ]
+    },
+    {
+     "id": "q26",
+     "num": 26,
+     "type": "mc",
+     "text": "We have ____ time, so we can still finish the project.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "a few"
+      },
+      {
+       "letter": "B",
+       "text": "many"
+      },
+      {
+       "letter": "C",
+       "text": "a little"
+      },
+      {
+       "letter": "D",
+       "text": "few"
+      }
+     ]
+    },
+    {
+     "id": "q27",
+     "num": 27,
+     "type": "mc",
+     "text": "She has ____ friends in her class, so she always has someone to talk to.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "little"
+      },
+      {
+       "letter": "B",
+       "text": "a few"
+      },
+      {
+       "letter": "C",
+       "text": "much"
+      },
+      {
+       "letter": "D",
+       "text": "a little"
+      }
+     ]
+    },
+    {
+     "id": "q28",
+     "num": 28,
+     "type": "mc",
+     "text": "Too ____ cars on the road cause pollution.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "much"
+      },
+      {
+       "letter": "B",
+       "text": "little"
+      },
+      {
+       "letter": "C",
+       "text": "many"
+      },
+      {
+       "letter": "D",
+       "text": "a little"
+      }
+     ]
+    },
+    {
+     "id": "q29",
+     "num": 29,
+     "type": "mc",
+     "text": "There is very ____ juice left, so we need to buy more.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "few"
+      },
+      {
+       "letter": "B",
+       "text": "many"
+      },
+      {
+       "letter": "C",
+       "text": "a few"
+      },
+      {
+       "letter": "D",
+       "text": "little"
+      }
+     ]
+    },
+    {
+     "id": "q30",
+     "num": 30,
+     "type": "mc",
+     "text": "He doesn’t have ____ experience with computers.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "many"
+      },
+      {
+       "letter": "B",
+       "text": "much"
+      },
+      {
+       "letter": "C",
+       "text": "few"
+      },
+      {
+       "letter": "D",
+       "text": "several"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Part 6: Conditionals (Questions 31-35)",
+   "preamble": [
+    "Choose the word or phrase that correctly completes the sentence."
+   ],
+   "bankLine": null,
+   "bank": null,
+   "questions": [
+    {
+     "id": "q31",
+     "num": 31,
+     "type": "mc",
+     "text": "If you mix red and blue paint, you ____ purple.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "get"
+      },
+      {
+       "letter": "B",
+       "text": "would get"
+      },
+      {
+       "letter": "C",
+       "text": "got"
+      },
+      {
+       "letter": "D",
+       "text": "would have gotten"
+      }
+     ]
+    },
+    {
+     "id": "q32",
+     "num": 32,
+     "type": "mc",
+     "text": "If it rains tomorrow, the match ____ postponed.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "would be"
+      },
+      {
+       "letter": "B",
+       "text": "will be"
+      },
+      {
+       "letter": "C",
+       "text": "was"
+      },
+      {
+       "letter": "D",
+       "text": "would have been"
+      }
+     ]
+    },
+    {
+     "id": "q33",
+     "num": 33,
+     "type": "mc",
+     "text": "If I ____ taller, I would join the basketball team.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "am"
+      },
+      {
+       "letter": "B",
+       "text": "will be"
+      },
+      {
+       "letter": "C",
+       "text": "were"
+      },
+      {
+       "letter": "D",
+       "text": "would be"
+      }
+     ]
+    },
+    {
+     "id": "q34",
+     "num": 34,
+     "type": "mc",
+     "text": "If she had left earlier, she ____ the train.",
+     "options": [
+      {
+       "letter": "A",
+       "text": "would have caught"
+      },
+      {
+       "letter": "B",
+       "text": "would catch"
+      },
+      {
+       "letter": "C",
+       "text": "will catch"
+      },
+      {
+       "letter": "D",
+       "text": "caught"
+      }
+     ]
+    },
+    {
+     "id": "q35",
+     "num": 35,
+     "type": "mc",
+     "text": "What would you do if you ____ the lottery?",
+     "options": [
+      {
+       "letter": "A",
+       "text": "win"
+      },
+      {
+       "letter": "B",
+       "text": "will win"
+      },
+      {
+       "letter": "C",
+       "text": "won"
+      },
+      {
+       "letter": "D",
+       "text": "would win"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "Part 7: TOEFL Error Selection (Questions 36-45)",
+   "preamble": [
+    "Each sentence has four marked parts: A, B, C, and D. Choose the one part that is incorrect."
+   ],
+   "bankLine": null,
+   "bank": null,
+   "questions": [
+    {
+     "id": "q36",
+     "num": 36,
+     "type": "error",
+     "text": "Our family usually (A) travels to the coast (B) and stays (C) at a small hotel (D) on December.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q37",
+     "num": 37,
+     "type": "error",
+     "text": "(A) Much people in my neighborhood (B) enjoy playing soccer, (C) so the park (D) is always busy.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q38",
+     "num": 38,
+     "type": "error",
+     "text": "If I (A) had a bigger room, (B) I will (C) invite my friends (D) to stay over.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q39",
+     "num": 39,
+     "type": "error",
+     "text": "The library (A) opens at 8:00 a.m., (B) but it (C) closes on 5:30 p.m. (D) every afternoon.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q40",
+     "num": 40,
+     "type": "error",
+     "text": "(A) There is few traffic (B) on this road (C) early in (D) the morning.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q41",
+     "num": 41,
+     "type": "error",
+     "text": "We bought (A) some tomatoes, (B) but the store (C) had only (D) a few cheese.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q42",
+     "num": 42,
+     "type": "error",
+     "text": "The lecture (A) will be held (B) in the main hall (C) at Thursday (D) afternoon.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q43",
+     "num": 43,
+     "type": "error",
+     "text": "I (A) don’t have (B) many time (C) today, so (D) I can’t join you.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q44",
+     "num": 44,
+     "type": "error",
+     "text": "If the team (A) will practice (B) every day, it (C) will improve (D) before the final.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    },
+    {
+     "id": "q45",
+     "num": 45,
+     "type": "error",
+     "text": "If we (A) had known about the traffic, we (B) would (C) have left earlier (D) and arrive on time.",
+     "options": [
+      {
+       "letter": "A",
+       "text": ""
+      },
+      {
+       "letter": "B",
+       "text": ""
+      },
+      {
+       "letter": "C",
+       "text": ""
+      },
+      {
+       "letter": "D",
+       "text": ""
+      }
+     ]
+    }
+   ]
+  }
+ ]
+};
+  var tabLog = [];
+  var hiddenAt = null;
+  var focusLog = [];
+  var blurAt = null, blurTimer = null, ignoreFocus = false;
+  var dirty = false;
+  var items = [];
+
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+  function isoLocal(d) {
+    var off = -d.getTimezoneOffset(), sign = off >= 0 ? "+" : "-", a = Math.abs(off);
+    return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + "T" +
+      pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()) +
+      sign + pad(Math.floor(a / 60)) + ":" + pad(a % 60);
+  }
+  function clock(d) { return pad(d.getHours()) + ":" + pad(d.getMinutes()) + ":" + pad(d.getSeconds()); }
+  function norm(s) { return String(s).replace(/\s+/g, " ").trim(); }
+
+  function randInt(n) {
+    if (window.crypto && window.crypto.getRandomValues) {
+      var b = new Uint32Array(1), lim = Math.floor(4294967296 / n) * n;
+      do { window.crypto.getRandomValues(b); } while (b[0] >= lim);
+      return b[0] % n;
+    }
+    return Math.floor(Math.random() * n);
+  }
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = randInt(i + 1), t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
+  /* ---------- theme ---------- */
+  function setTheme(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    $("themeBtn").textContent = t === "dark" ? "Switch to light mode" : "Switch to dark mode";
+  }
+  $("themeBtn").addEventListener("click", function () {
+    setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark");
+  });
+  setTheme("light");
+
+  /* ---------- deterrents: copy / cut / paste / right-click ---------- */
+  var toastTimer = null;
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove("show"); }, 2200);
+  }
+  ["copy", "cut", "paste", "contextmenu"].forEach(function (type) {
+    document.addEventListener(type, function (e) {
+      e.preventDefault();
+      toast("Copy, cut, paste, and right-click are turned off during this quiz.");
+    }, true);
+  });
+
+  /* ---------- tab activity log ---------- */
+  function showWarning(entry, left, back) {
+    $("warnBody").textContent = "You left at " + clock(left) + " and came back at " + clock(back) +
+      " (about " + entry.secondsAway + " second" + (entry.secondsAway === 1 ? "" : "s") + " away).";
+    $("warnBg").classList.add("show");
+    $("warnOk").focus();
+  }
+  $("warnOk").addEventListener("click", function () { $("warnBg").classList.remove("show"); });
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      if (hiddenAt === null) hiddenAt = new Date();
+      if (blurTimer !== null) { clearTimeout(blurTimer); blurTimer = null; }
+      blurAt = null;
+    } else if (hiddenAt !== null) {
+      var back = new Date(), left = hiddenAt;
+      hiddenAt = null;
+      var entry = {
+        type: "tab_hidden",
+        leftAt: isoLocal(left),
+        returnedAt: isoLocal(back),
+        secondsAway: Math.round((back - left) / 1000)
+      };
+      tabLog.push(entry);
+      showWarning(entry, left, back);
+    }
+  });
+
+  /* ---------- window focus loss (separate from tab-away) ---------- */
+  $("focusOk").addEventListener("click", function () { $("focusBg").classList.remove("show"); });
+  function clearBlurState() {
+    if (blurTimer !== null) { clearTimeout(blurTimer); blurTimer = null; }
+    blurAt = null;
+  }
+  window.addEventListener("blur", function () {
+    if (ignoreFocus || document.hidden || hiddenAt !== null || blurAt !== null || blurTimer !== null) return;
+    var t = new Date();
+    blurTimer = setTimeout(function () {
+      blurTimer = null;
+      if (document.hidden || hiddenAt !== null || ignoreFocus) return;
+      blurAt = t;
+    }, 300);
+  });
+  window.addEventListener("focus", function () {
+    if (blurTimer !== null) { clearTimeout(blurTimer); blurTimer = null; }
+    if (blurAt === null) return;
+    var left = blurAt, back = new Date();
+    blurAt = null;
+    if (ignoreFocus || document.hidden) return;
+    focusLog.push({
+      type: "window_focus_lost",
+      leftAt: isoLocal(left),
+      returnedAt: isoLocal(back),
+      secondsAway: Math.round((back - left) / 1000)
+    });
+    $("focusBg").classList.add("show");
+    $("focusOk").focus();
+  });
+
+  /* ---------- building the quiz ---------- */
+  function markedText(container, text) {
+    text.split(/(\([A-D]\))/).forEach(function (part) {
+      if (!part) return;
+      container.appendChild(/^\([A-D]\)$/.test(part) ? el("span", "mark", part) : document.createTextNode(part));
+    });
+  }
+
+  function buildQuestion(q, pos, sec) {
+    var row = el("div", "q");
+    row.appendChild(el("div", "qnum", pos + "."));
+    var body = el("div", "qbody");
+    row.appendChild(body);
+    var get;
+
+    if (q.type === "mc" || q.type === "error") {
+      var qt = el("div", "qtext");
+      if (q.type === "error") markedText(qt, q.text); else qt.textContent = q.text;
+      body.appendChild(qt);
+      var group = el("div", q.type === "error" ? "opts inline" : "opts");
+      group.setAttribute("role", "radiogroup");
+      q.options.forEach(function (o) {
+        var lab = el("label", "opt");
+        var r = document.createElement("input");
+        r.type = "radio"; r.name = q.id; r.value = o.letter;
+        lab.appendChild(r);
+        if (q.type === "error") {
+          lab.appendChild(el("span", "l", o.letter));
+        } else {
+          lab.appendChild(el("span", "l", o.letter + "."));
+          lab.appendChild(el("span", null, o.text));
+        }
+        group.appendChild(lab);
+      });
+      body.appendChild(group);
+      get = function () {
+        var c = group.querySelector("input:checked");
+        if (!c) return { letter: "", text: "" };
+        var o = q.options.filter(function (x) { return x.letter === c.value; })[0];
+        return { letter: o.letter, text: o.text };
+      };
+    } else if (q.type === "matching") {
+      var line = el("div", "qline");
+      var sel = document.createElement("select");
+      sel.name = q.id;
+      sel.setAttribute("aria-label", "Sentence type");
+      var d = el("option", null, "Select..."); d.value = ""; sel.appendChild(d);
+      sec.bank.forEach(function (o) {
+        var op = el("option", null, o.letter + ". " + o.text);
+        op.value = o.letter; sel.appendChild(op);
+      });
+      line.appendChild(sel);
+      line.appendChild(el("span", "qtext", q.text.replace(/^____ /, "")));
+      body.appendChild(line);
+      get = function () {
+        if (!sel.value) return { letter: "", text: "" };
+        var o = sec.bank.filter(function (x) { return x.letter === sel.value; })[0];
+        return { letter: o.letter, text: o.text };
+      };
+    } else {
+      var idx = q.text.lastIndexOf("________");
+      body.appendChild(el("div", "qtext", q.text.slice(0, idx)));
+      var inp = document.createElement("input");
+      inp.type = "text"; inp.className = "short"; inp.name = q.id;
+      inp.setAttribute("aria-label", "Your answer");
+      inp.autocomplete = "off"; inp.spellcheck = false; inp.maxLength = 60;
+      inp.setAttribute("autocapitalize", "off");
+      body.appendChild(inp);
+      get = function () { return { text: norm(inp.value) }; };
+    }
+    return { el: row, get: get };
+  }
+
+  function isAnswered(a) { return !!(a.letter || (a.text && a.text.length)) && !(a.letter === "" && a.text === ""); }
+  function answeredCount() {
+    return items.filter(function (it) { var a = it.get(); return a.letter ? true : (a.text !== undefined && a.text !== ""); }).length;
+  }
+  function updateProgress() { $("progress").textContent = "Answered " + answeredCount() + " of " + items.length; }
+
+  function renderQuiz() {
+    var host = $("quiz"), pos = 0;
+    EXAM.sections.forEach(function (sec) {
+      var wrap = el("section", "card");
+      wrap.appendChild(el("h2", null, sec.title));
+      sec.preamble.forEach(function (p) { wrap.appendChild(el("p", "instr", p)); });
+      if (sec.bankLine) wrap.appendChild(el("p", "bank", sec.bankLine));
+      shuffle(sec.questions).forEach(function (q) {
+        pos++;
+        var built = buildQuestion(q, pos, sec);
+        wrap.appendChild(built.el);
+        items.push({ q: q, pos: pos, get: built.get, bank: sec.bank });
+      });
+      host.appendChild(wrap);
+    });
+    $("intro").textContent = EXAM.intro;
+    updateProgress();
+  }
+
+  document.addEventListener("input", function () { dirty = true; updateProgress(); });
+  document.addEventListener("change", function () { dirty = true; updateProgress(); });
+  window.addEventListener("beforeunload", function (e) {
+    if (dirty) { e.preventDefault(); e.returnValue = ""; }
+  });
+
+  /* ---------- submission ---------- */
+  function safeName(s) {
+    return String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^A-Za-z0-9]+/g, "_").replace(/^_+|_+$/g, "");
+  }
+
+  $("downloadBtn").addEventListener("click", function () {
+    var fields = ["firstName", "surnames", "group"], bad = [];
+    fields.forEach(function (id) {
+      var inp = $(id), ok = norm(inp.value) !== "";
+      inp.classList.toggle("invalid", !ok);
+      if (!ok) bad.push(id);
+    });
+    if (bad.length) {
+      $("infoErr").textContent = "Please fill in your first name, surnames, and group before downloading.";
+      $(bad[0]).focus();
+      window.scrollTo(0, 0);
+      return;
+    }
+    $("infoErr").textContent = "";
+
+    var blanks = items.length - answeredCount();
+    if (blanks > 0) {
+      ignoreFocus = true;
+      var proceed = window.confirm("You left " + blanks + " question" + (blanks === 1 ? "" : "s") + " unanswered. Download anyway?");
+      setTimeout(function () { ignoreFocus = false; clearBlurState(); }, 600);
+      if (!proceed) return;
+    }
+
+    var first = norm($("firstName").value), last = norm($("surnames").value), grp = norm($("group").value);
+    var now = new Date();
+    var sorted = items.slice().sort(function (a, b) { return a.q.num - b.q.num; });
+    var answers = {};
+    sorted.forEach(function (it) {
+      var a = it.get();
+      answers[it.q.id] = it.q.type === "short" ? a.text : a.letter;
+    });
+    var questions = items.map(function (it) {
+      var a = it.get();
+      var opts = it.q.type === "matching" ? it.bank : it.q.options;
+      return {
+        id: it.q.id,
+        position: it.pos,
+        type: it.q.type,
+        text: it.q.text,
+        options: it.q.type === "short" ? [] : opts.map(function (o) { return { letter: o.letter, text: o.text }; }),
+        chosenAnswer: it.q.type === "short" ? { text: a.text } : { letter: a.letter, text: a.text }
+      };
+    });
+    var out = {
+      quizTitle: EXAM.title,
+      quizVersion: EXAM.version,
+      firstName: first,
+      surnames: last,
+      fullName: first + " " + last,
+      group: grp,
+      submittedAt: isoLocal(now),
+      theme: document.documentElement.getAttribute("data-theme"),
+      tabActivityLog: tabLog.slice(),
+      focusLossLog: focusLog.slice(),
+      answers: answers,
+      questions: questions
+    };
+    var fname = "Graded_practice_10th_Grade_" + safeName(last) + "_" + safeName(first) + "_" + safeName(grp) + ".json";
+    var blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = fname;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+    dirty = false;
+    $("status").textContent = "Downloaded: " + fname + ". Now upload this file to Google Classroom.";
+  });
+
+  renderQuiz();
+})();
+</script>
+</body>
+</html>
